@@ -1,0 +1,167 @@
+// USER VARIABLES SECTION
+
+$main: #0f1923;
+$green: #9acb34; // Main Color
+$accent: #04d0d9; // Accent Color
+$light: #fbf8ef; // Light Color
+$error: #ff4655;
+
+$blue: #072446;
+$blue-light: #013a67;
+$orange: #e1aa12;
+$ocean: #008089;
+$ocean-light: #00b0a6;
+
+$fontsize: 16px; // Body Font Size
+$textcolor: #353e4a; // Text Color
+$system: -apple-system, BlinkMacSystemFont, Arial, sans-serif; // System Font Family
+$neo: NeoSans, sans-serif; // Montserrat Font Family
+
+$anim: all ease-in-out 0.3s;
+$boxShadow: 0px 0px 30px #0f1923;
+// Bootstrap compatible gutter variable => $gutter
+// $grid-gutter-width: 20px;
+// // $container-max-widths: (
+// //   sm: 540px,
+// //   md: 1100px,
+// //   lg: 1200px,
+// //   xl: 1400px
+// // ) !default;
+
+// $grid-breakpoints: (
+//   xs: 0,
+//   sm: 760px,
+//   md: 980px,
+//   lg: 1220px,
+//   xl: 1440px,
+// );
+
+$container-max-widths: (
+  sm: 740px,
+  md: 960px,
+  lg: 1180px,
+  xl: 1600px,
+) !default;
+
+// IMPORT SECTION
+
+@import "node_modules/bootstrap/scss/bootstrap-reboot.scss"; // Bootstrap Reboot collection
+@import "node_modules/bootstrap/scss/mixins/_breakpoints.scss"; // Bootstrap Breakpoints mixin
+@import "node_modules/bootstrap/scss/bootstrap-grid.scss"; // Optional Bootstrap Grid
+// @import 'node_modules/bootstrap/scss/utilities/_sizing.scss'; // Optional Bootstrap Utilites
+
+// FONTS LOAD SECTION
+
+@mixin font($fname, $fstyle, $fweight, $furl) {
+  @font-face {
+    font-family: $fname;
+    font-style: $fstyle;
+    font-weight: $fweight;
+    // font-display: swap; // Uncomment to initially display system fonts
+    src: local($fname), url($furl) format("woff2");
+    font-display: swap;
+  }
+}
+
+@include font(
+  "Neo Sans",
+  normal,
+  400,
+  "../../frontend/fonts/NeoSans-Regular.woff2"
+);
+@include font(
+  "Neo Sans",
+  normal,
+  200,
+  "../../frontend/fonts/NeoSans-Light.woff2"
+);
+@include font(
+  "Neo Sans",
+  normal,
+  700,
+  "../../frontend/fonts/NeoSans-Bold.woff2"
+);
+
+// GENERAL DOCUMENT STYLES
+
+::placeholder {
+  color: $textcolor;
+}
+
+::selection {
+  background-color: $accent;
+  color: $light;
+}
+
+a {
+  text-decoration: none;
+  color: $textcolor;
+  transition: 0.1s ease-in-out;
+}
+a:hover {
+  text-decoration: none;
+  color: $accent;
+}
+i {
+  font-size: 30px;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  padding: 0;
+  font-family: $neo;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: $textcolor;
+  letter-spacing: 1px;
+}
+input,
+textarea {
+  outline: none;
+  &:focus:required:invalid {
+    border-color: red;
+  }
+  &:required:valid {
+    border-color: green;
+  }
+}
+html {
+  // overflow-y: hidden;
+}
+body {
+  background-color: $light;
+  font-family: $neo;
+  font-size: $fontsize;
+  // min-width: 320px;
+  position: relative;
+  line-height: 1.65;
+  overflow-x: hidden;
+  color: $textcolor;
+}
+
+@include media-breakpoint-down(sm) {
+  body {
+    font-size: 13px;
+  }
+  h1 {
+    font-size: 40px;
+  }
+  h2 {
+    font-size: 30px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+}
