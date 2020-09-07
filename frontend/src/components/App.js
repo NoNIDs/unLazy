@@ -31,6 +31,7 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []); // passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
+
   return (
     <Provider store={store}>
       <AlertProvider template={AlertTemplate}>

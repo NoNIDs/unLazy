@@ -9,7 +9,7 @@ import {
   REGISTER_FAIL,
 } from "../actions/types";
 
-const initialState = {
+export const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: false,
   isLoading: false,

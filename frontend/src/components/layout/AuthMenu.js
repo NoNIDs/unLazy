@@ -2,12 +2,37 @@ import React, { useState, useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Link } from "react-router-dom";
 
-function AuthMenu() {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { enableNotify, disableNotify } from "../../actions/notify";
+
+function AuthMenu(props) {
+  const { notify } = props.notify;
+
+  const [notifyValue, setNotifyValue] = useState(notify);
+
+  useEffect(() => {
+    if (notifyValue) enableNotify(notifyValue);
+    else disableNotify(notifyValue);
+    console.log(notifyValue, "suck");
+  });
+
+  function changeNotifyValue() {
+    setNotifyValue(!notifyValue);
+  }
+
+  // console.log("fas " + (notifyValue ? "fa-bell" : "fa-bell-slash"));
   return (
     <NavBar>
-      <NavItem icon="fas fa-bell"></NavItem>
+      <NavItem
+        icon={"fas " + (notifyValue ? "fa-bell" : "fa-bell-slash")}
+        changeNotifyValue={changeNotifyValue}
+      ></NavItem>
       <NavItem icon="fas fa-chevron-down">
-        <DropDownMenu></DropDownMenu>
+        <DropDownMenu
+          notifyValue={notifyValue}
+          changeNotifyValue={changeNotifyValue}
+        ></DropDownMenu>
       </NavItem>
     </NavBar>
   );
@@ -23,31 +48,49 @@ function NavBar(props) {
 
 function NavItem(props) {
   const [open, setOpen] = useState(false);
+  // const dropDownRef = useRef(null);
+
+  // useEffect(() => {
+  //   window.addEventListener("click", (e) => {
+  //     if (e.target !== dropDownRef.current) {
+  //       setOpen(false);
+  //       console.log(dropDownRef);
+  //     }
+  //   });
+  // }, []);
 
   return (
     <li className="auth-menu-item">
       <Link
         to="#"
         className={"icon-button " + props.icon}
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          setOpen(!open);
+          try {
+            props.changeNotifyValue();
+          } catch {
+            //
+          }
+        }}
+        replace
       ></Link>
       {open && props.children}
     </li>
   );
 }
 
-function DropDownMenu() {
+function DropDownMenu(props) {
   const [activeMenu, setActiveMenu] = useState("main");
   const [menuHeight, setMenuHeight] = useState(null);
   const dropDownRef = useRef(null);
 
   useEffect(() => {
     setMenuHeight(dropDownRef.current?.firstChild.offsetHeight + 30);
+    // console.log(dropDownRef.current);
   }, []);
 
   function calcHeight(el) {
     const height = el.offsetHeight;
-    console.log(height);
     setMenuHeight(height + 30);
   }
 
@@ -55,8 +98,16 @@ function DropDownMenu() {
     return (
       <Link
         className="auth-menu-item-link"
-        onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}
+        onClick={() => {
+          props.goToMenu && setActiveMenu(props.goToMenu);
+          try {
+            props.changeNotifyValue();
+          } catch {
+            //
+          }
+        }}
         to={props.link}
+        replace
       >
         <i className={"icon-button " + props.leftIcon}></i>
         {props.children}
@@ -95,7 +146,13 @@ function DropDownMenu() {
           <DropDownItem goToMenu="main" leftIcon="fas fa-chevron-left" link="#">
             <p className="menu-item-title">Main menu</p>
           </DropDownItem>
-          <DropDownItem leftIcon="fas fa-bell" link="#">
+          <DropDownItem
+            leftIcon={
+              "fas " + (props.notifyValue ? "fa-bell" : "fa-bell-slash")
+            }
+            link="#"
+            changeNotifyValue={props.changeNotifyValue}
+          >
             <p className="menu-item-title">Notifications</p>
           </DropDownItem>
           <DropDownItem link="#">
@@ -110,4 +167,16 @@ function DropDownMenu() {
   );
 }
 
-export default AuthMenu;
+AuthMenu.propTypes = {
+  notify: PropTypes.object.isRequired,
+  enableNotify: PropTypes.func.isRequired,
+  disableNotify: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  notify: state.notify,
+});
+
+export default connect(mapStateToProps, { enableNotify, disableNotify })(
+  AuthMenu
+);

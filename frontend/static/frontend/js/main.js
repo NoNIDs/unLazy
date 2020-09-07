@@ -63912,11 +63912,100 @@ var returnErrors = function returnErrors(msg, status) {
 
 /***/ }),
 
+/***/ "./src/actions/notify.js":
+/*!*******************************!*\
+  !*** ./src/actions/notify.js ***!
+  \*******************************/
+/*! exports provided: enableNotify, disableNotify, tokenConfig */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "enableNotify", function() { return enableNotify; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "disableNotify", function() { return disableNotify; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tokenConfig", function() { return tokenConfig; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "./src/actions/types.js");
+
+ // Enable notify
+
+var enableNotify = function enableNotify(notify) {
+  return function (dispatch) {
+    // Headers
+    var config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }; // Request Body
+
+    var body = JSON.stringify({
+      notify: notify
+    });
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/auth/user", body, config).then(function (res) {
+      dispatch({
+        type: _types__WEBPACK_IMPORTED_MODULE_1__["ENABLE_NOTIFY"],
+        payload: res.data
+      });
+    })["catch"](function (err) {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: _types__WEBPACK_IMPORTED_MODULE_1__["CREATE_MESSAGE"]
+      });
+    });
+  };
+}; // Disable notify
+
+var disableNotify = function disableNotify(notify) {
+  return function (dispatch) {
+    // Headers
+    var config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }; // Request Body
+
+    var body = JSON.stringify({
+      notify: notify
+    });
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/auth/user", body, config).then(function (res) {
+      dispatch({
+        type: _types__WEBPACK_IMPORTED_MODULE_1__["DISABLE_NOTIFY"],
+        payload: res.data
+      });
+    })["catch"](function (err) {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: _types__WEBPACK_IMPORTED_MODULE_1__["CREATE_MESSAGE"]
+      });
+    });
+  };
+}; // Setup config with token - helper func
+
+var tokenConfig = function tokenConfig(getState) {
+  // Get token from state
+  var token = getState().auth.token; // Headers
+
+  var config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }; // If token, add to headers config
+
+  if (token) {
+    config.headers["Authorization"] = "Token ".concat(token);
+  }
+
+  return config;
+};
+
+/***/ }),
+
 /***/ "./src/actions/types.js":
 /*!******************************!*\
   !*** ./src/actions/types.js ***!
   \******************************/
-/*! exports provided: GET_ERRORS, CREATE_MESSAGE, USER_LOADING, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL */
+/*! exports provided: GET_ERRORS, CREATE_MESSAGE, USER_LOADING, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, ENABLE_NOTIFY, DISABLE_NOTIFY */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63931,6 +64020,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_SUCCESS", function() { return LOGOUT_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_SUCCESS", function() { return REGISTER_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REGISTER_FAIL", function() { return REGISTER_FAIL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ENABLE_NOTIFY", function() { return ENABLE_NOTIFY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DISABLE_NOTIFY", function() { return DISABLE_NOTIFY; });
 var GET_ERRORS = "GET_ERRORS";
 var CREATE_MESSAGE = "CREATE_MESSAGE";
 var USER_LOADING = "USER_LOADING";
@@ -63941,6 +64032,8 @@ var LOGIN_FAIL = "LOGIN_FAIL";
 var LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 var REGISTER_SUCCESS = "REGISTER_SUCCESS";
 var REGISTER_FAIL = "REGISTER_FAIL";
+var ENABLE_NOTIFY = "ENABLE_NOTIFY";
+var DISABLE_NOTIFY = "DISABLE_NOTIFY";
 
 /***/ }),
 
@@ -64967,6 +65060,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _actions_notify__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/notify */ "./src/actions/notify.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -64983,12 +65080,36 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function AuthMenu() {
+
+
+
+function AuthMenu(props) {
+  var notify = props.notify.notify;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(notify),
+      _useState2 = _slicedToArray(_useState, 2),
+      notifyValue = _useState2[0],
+      setNotifyValue = _useState2[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (notifyValue) Object(_actions_notify__WEBPACK_IMPORTED_MODULE_5__["enableNotify"])(notifyValue);else Object(_actions_notify__WEBPACK_IMPORTED_MODULE_5__["disableNotify"])(notifyValue);
+    console.log(notifyValue, "suck");
+  });
+
+  function changeNotifyValue() {
+    setNotifyValue(!notifyValue);
+  } // console.log("fas " + (notifyValue ? "fa-bell" : "fa-bell-slash"));
+
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavBar, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavItem, {
-    icon: "fas fa-bell"
+    icon: "fas " + (notifyValue ? "fa-bell" : "fa-bell-slash"),
+    changeNotifyValue: changeNotifyValue
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NavItem, {
     icon: "fas fa-chevron-down"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DropDownMenu, null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DropDownMenu, {
+    notifyValue: notifyValue,
+    changeNotifyValue: changeNotifyValue
+  })));
 }
 
 function NavBar(props) {
@@ -65000,10 +65121,19 @@ function NavBar(props) {
 }
 
 function NavItem(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      open = _useState2[0],
-      setOpen = _useState2[1];
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      open = _useState4[0],
+      setOpen = _useState4[1]; // const dropDownRef = useRef(null);
+  // useEffect(() => {
+  //   window.addEventListener("click", (e) => {
+  //     if (e.target !== dropDownRef.current) {
+  //       setOpen(false);
+  //       console.log(dropDownRef);
+  //     }
+  //   });
+  // }, []);
+
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "auth-menu-item"
@@ -65011,32 +65141,37 @@ function NavItem(props) {
     to: "#",
     className: "icon-button " + props.icon,
     onClick: function onClick() {
-      return setOpen(!open);
-    }
+      setOpen(!open);
+
+      try {
+        props.changeNotifyValue();
+      } catch (_unused) {//
+      }
+    },
+    replace: true
   }), open && props.children);
 }
 
-function DropDownMenu() {
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("main"),
-      _useState4 = _slicedToArray(_useState3, 2),
-      activeMenu = _useState4[0],
-      setActiveMenu = _useState4[1];
-
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+function DropDownMenu(props) {
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("main"),
       _useState6 = _slicedToArray(_useState5, 2),
-      menuHeight = _useState6[0],
-      setMenuHeight = _useState6[1];
+      activeMenu = _useState6[0],
+      setActiveMenu = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      menuHeight = _useState8[0],
+      setMenuHeight = _useState8[1];
 
   var dropDownRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var _dropDownRef$current;
 
-    setMenuHeight(((_dropDownRef$current = dropDownRef.current) === null || _dropDownRef$current === void 0 ? void 0 : _dropDownRef$current.firstChild.offsetHeight) + 30);
+    setMenuHeight(((_dropDownRef$current = dropDownRef.current) === null || _dropDownRef$current === void 0 ? void 0 : _dropDownRef$current.firstChild.offsetHeight) + 30); // console.log(dropDownRef.current);
   }, []);
 
   function calcHeight(el) {
     var height = el.offsetHeight;
-    console.log(height);
     setMenuHeight(height + 30);
   }
 
@@ -65044,9 +65179,15 @@ function DropDownMenu() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
       className: "auth-menu-item-link",
       onClick: function onClick() {
-        return props.goToMenu && setActiveMenu(props.goToMenu);
+        props.goToMenu && setActiveMenu(props.goToMenu);
+
+        try {
+          props.changeNotifyValue();
+        } catch (_unused2) {//
+        }
       },
-      to: props.link
+      to: props.link,
+      replace: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "icon-button " + props.leftIcon
     }), props.children, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -65094,8 +65235,9 @@ function DropDownMenu() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "menu-item-title"
   }, "Main menu")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DropDownItem, {
-    leftIcon: "fas fa-bell",
-    link: "#"
+    leftIcon: "fas " + (props.notifyValue ? "fa-bell" : "fa-bell-slash"),
+    link: "#",
+    changeNotifyValue: props.changeNotifyValue
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "menu-item-title"
   }, "Notifications")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DropDownItem, {
@@ -65109,7 +65251,22 @@ function DropDownMenu() {
   }, "//TODO")))));
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (AuthMenu);
+AuthMenu.propTypes = {
+  notify: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object.isRequired,
+  enableNotify: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
+  disableNotify: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    notify: state.notify
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, {
+  enableNotify: _actions_notify__WEBPACK_IMPORTED_MODULE_5__["enableNotify"],
+  disableNotify: _actions_notify__WEBPACK_IMPORTED_MODULE_5__["disableNotify"]
+})(AuthMenu));
 
 /***/ }),
 
@@ -65378,11 +65535,12 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 /*!******************************!*\
   !*** ./src/reducers/auth.js ***!
   \******************************/
-/*! exports provided: default */
+/*! exports provided: initialState, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialState", function() { return initialState; });
 /* harmony import */ var _actions_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/types */ "./src/actions/types.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -65487,6 +65645,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./errors */ "./src/reducers/errors.js");
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./messages */ "./src/reducers/messages.js");
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth */ "./src/reducers/auth.js");
+/* harmony import */ var _notify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./notify */ "./src/reducers/notify.js");
+
 
 
 
@@ -65494,7 +65654,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   errors: _errors__WEBPACK_IMPORTED_MODULE_1__["default"],
   messages: _messages__WEBPACK_IMPORTED_MODULE_2__["default"],
-  auth: _auth__WEBPACK_IMPORTED_MODULE_3__["default"]
+  auth: _auth__WEBPACK_IMPORTED_MODULE_3__["default"],
+  notify: _notify__WEBPACK_IMPORTED_MODULE_4__["default"]
 }));
 
 /***/ }),
@@ -65518,6 +65679,38 @@ var initialState = {};
   switch (action.type) {
     case _actions_types__WEBPACK_IMPORTED_MODULE_0__["CREATE_MESSAGE"]:
       return state = action.payload;
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
+/***/ "./src/reducers/notify.js":
+/*!********************************!*\
+  !*** ./src/reducers/notify.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/types */ "./src/actions/types.js");
+
+var initialState = {
+  notify: true
+};
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["ENABLE_NOTIFY"]:
+    case _actions_types__WEBPACK_IMPORTED_MODULE_0__["DISABLE_NOTIFY"]:
+      return {
+        notify: action.notify
+      };
 
     default:
       return state;
