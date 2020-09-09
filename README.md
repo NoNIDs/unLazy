@@ -1,2 +1,2 @@
 # UnLazy
-Task scheduling manager
+Task scheduling manager (under development) //
