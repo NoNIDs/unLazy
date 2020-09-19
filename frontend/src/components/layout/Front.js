@@ -1,11 +1,28 @@
-import React from "react";
-import TaskButton from "../common/TaskButton";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import AddTaskPopup from "../common/AddTaskPopup";
+import TaskButton from "../common/TaskButton";
+
+import { createTask } from "../../actions/task";
+
 function Front(props) {
   const { isAuthenticated } = props.auth;
+  const [popup, setPopup] = useState(false);
+
+  function closePopup() {
+    setPopup(false);
+  }
+
+  function openPopup() {
+    setPopup(true);
+  }
+
+  function addTask(taskObj) {
+    props.createTask(taskObj);
+  }
 
   return (
     <div className="front-container">
@@ -32,7 +49,20 @@ function Front(props) {
           <h5 className="features-title">Полезная информация и рекомендации</h5>
         </div>
       </div>
-      {isAuthenticated ? <TaskButton isFirstTask={true}></TaskButton> : ""}
+      {isAuthenticated ? (
+        <TaskButton openPopup={openPopup} isFirstTask={true}></TaskButton>
+      ) : (
+        ""
+      )}
+      {popup ? (
+        <AddTaskPopup
+          changeTaskCheck={false}
+          closePopup={closePopup}
+          addTask={addTask}
+        ></AddTaskPopup>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
@@ -45,4 +75,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Front);
+export default connect(mapStateToProps, { createTask })(Front);

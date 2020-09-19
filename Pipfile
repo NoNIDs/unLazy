@@ -11,6 +11,7 @@ django-rest-knox = "*"
 django-grappelli = "*"
 autopep8 = "*"
 shell = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.7"

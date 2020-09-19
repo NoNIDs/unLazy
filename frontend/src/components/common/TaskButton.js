@@ -1,9 +1,9 @@
 import React from "react";
 
-function TaskButton(props) {
+function TaskButton({ isFirstTask, openPopup }) {
   return (
     <div className="task-btn-container">
-      {props.isFirstTask ? (
+      {isFirstTask ? (
         <div className="task-btn-helper">
           <i className="fas fa-arrow-left"></i>
           <p className="task-btn-helper-title">Click to add first task</p>
@@ -11,7 +11,7 @@ function TaskButton(props) {
       ) : (
         ""
       )}
-      <button className="task-btn">
+      <button className="task-btn" onClick={() => openPopup()}>
         <i className="fas fa-plus"></i>
       </button>
     </div>

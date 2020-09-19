@@ -11,14 +11,11 @@ function AuthMenu(props) {
 
   const [notifyValue, setNotifyValue] = useState(notify);
 
-  useEffect(() => {
-    if (notifyValue) enableNotify(notifyValue);
-    else disableNotify(notifyValue);
-    console.log(notifyValue, "suck");
-  });
-
   function changeNotifyValue() {
     setNotifyValue(!notifyValue);
+    // reverse value
+    if (notifyValue) props.disableNotify(!notifyValue);
+    else props.enableNotify(!notifyValue);
   }
 
   // console.log("fas " + (notifyValue ? "fa-bell" : "fa-bell-slash"));

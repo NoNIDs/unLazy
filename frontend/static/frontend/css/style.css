@@ -3895,10 +3895,6 @@ html {
   color: #353e4a;
 }
 
-::-ms-input-placeholder {
-  color: #353e4a;
-}
-
 ::placeholder {
   color: #353e4a;
 }
@@ -3994,14 +3990,19 @@ body {
 
 .btn {
   margin: 3px;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   transition: all ease-in-out 0.3s;
   border: none;
-  background-color: transparent;
+  color: #0f1923;
+  background-color: #00b0a6;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .btn:hover {
-  color: #00b0a6;
+  color: #fbf8ef;
+  background-color: #008089;
 }
 
 .logout-btn {
@@ -4029,7 +4030,7 @@ body {
 
 .task-btn-container {
   position: absolute;
-  bottom: -14%;
+  bottom: -11%;
   right: -4%;
   display: flex;
   flex-direction: column;
@@ -4099,6 +4100,24 @@ body {
   }
 }
 
+@-webkit-keyframes anim-popup {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes anim-popup {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
 .reg_form_err {
   color: #ff4655;
 }
@@ -4142,15 +4161,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: -webkit-filter 300ms;
   transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
   font-size: 20px;
 }
 
 .icon-button:hover {
-  -webkit-filter: brightness(1.2);
-          filter: brightness(1.2);
+  filter: brightness(1.2);
 }
 
 .icon-button {
@@ -4200,8 +4216,7 @@ body {
 }
 
 .dropdown .auth-menu-item-link .icon-button:hover {
-  -webkit-filter: none;
-          filter: none;
+  filter: none;
 }
 
 .dropdown .auth-menu-item-link:hover {
@@ -4311,8 +4326,7 @@ body {
   color: #fbf8ef;
   text-decoration: none;
   transition: all ease-in-out 0.3s;
-  -webkit-filter: grayscale(100%) opacity(0.7);
-          filter: grayscale(100%) opacity(0.7);
+  filter: grayscale(100%) opacity(0.7);
 }
 
 .nav-menu-link-title {
@@ -4329,8 +4343,7 @@ body {
 }
 
 .nav-menu-link:hover {
-  -webkit-filter: grayscale(0%) opacity(1);
-          filter: grayscale(0%) opacity(1);
+  filter: grayscale(0%) opacity(1);
   background-color: #172635;
 }
 
@@ -4436,4 +4449,75 @@ body {
 
 .bg-ocean-light {
   background-color: #00b0a6;
+}
+
+.overlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(15, 25, 35, 0.5);
+}
+
+.popup-container {
+  position: relative;
+  z-index: 100;
+  width: 40%;
+  height: 70%;
+  background-color: #fbf8ef;
+  -webkit-animation: anim-popup ease-in-out 0.5s;
+          animation: anim-popup ease-in-out 0.5s;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  padding-left: 7rem;
+  padding-right: 7rem;
+  border-radius: 1rem;
+}
+
+.popup-text {
+  text-align: center;
+  color: #0f1923;
+}
+
+.popup-closeBtn {
+  display: flex;
+  position: absolute;
+  border: none;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 7rem;
+  color: #ff4655;
+  transition: all ease-in-out 0.3s;
+}
+
+.form-add-task {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-add-task-title {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+.form-add-task-subcontainer {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-add-task-btn-container {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

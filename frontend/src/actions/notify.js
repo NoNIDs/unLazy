@@ -1,21 +1,16 @@
 import axios from "axios";
+import { returnErrors } from "./messages";
+import { tokenConfig } from "./auth";
 
 import { ENABLE_NOTIFY, DISABLE_NOTIFY, CREATE_MESSAGE } from "./types";
 
 // Enable notify
-export const enableNotify = (notify) => (dispatch) => {
-  // Headers
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
+export const enableNotify = (notify) => (dispatch, getState) => {
   // Request Body
   const body = JSON.stringify({ notify });
 
   axios
-    .post("/api/auth/user", body, config)
+    .put("/api/auth/user", body, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: ENABLE_NOTIFY,
@@ -31,19 +26,12 @@ export const enableNotify = (notify) => (dispatch) => {
 };
 
 // Disable notify
-export const disableNotify = (notify) => (dispatch) => {
-  // Headers
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
+export const disableNotify = (notify) => (dispatch, getState) => {
   // Request Body
   const body = JSON.stringify({ notify });
 
   axios
-    .post("/api/auth/user", body, config)
+    .put("/api/auth/user", body, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: DISABLE_NOTIFY,
@@ -56,24 +44,4 @@ export const disableNotify = (notify) => (dispatch) => {
         type: CREATE_MESSAGE,
       });
     });
-};
-
-// Setup config with token - helper func
-export const tokenConfig = (getState) => {
-  // Get token from state
-  const token = getState().auth.token;
-
-  // Headers
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  // If token, add to headers config
-  if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
-  }
-
-  return config;
 };

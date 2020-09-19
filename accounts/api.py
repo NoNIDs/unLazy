@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .models import User
 
 
 # Register API
@@ -39,15 +40,17 @@ class LoginAPI(generics.GenericAPIView):
 
 
 # Get User API
-class UserAPI(generics.RetrieveAPIView):
+class UserAPI(generics.RetrieveUpdateAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
     serializer_class = UserSerializer
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
+    def put(self, request):
+        data = request.data
+        user = User.objects.get(username=request.user.username)
+        serializer = UserSerializer(instance=user, data=data, partial=True)
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -10,3 +10,4 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const ENABLE_NOTIFY = "ENABLE_NOTIFY";
 export const DISABLE_NOTIFY = "DISABLE_NOTIFY";
+export const ADD_TASK = "ADD_TASK";

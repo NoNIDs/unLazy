@@ -9,6 +9,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'notify')
 
+    def update(self, instance, validated_data):
+        instance.id = validated_data.get('id', instance.id)
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.notify = validated_data.get('notify', instance.notify)
+        instance.save()
+        return instance
+
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
