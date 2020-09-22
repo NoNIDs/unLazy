@@ -6,11 +6,12 @@ import PropTypes from "prop-types";
 import AddTaskPopup from "../common/AddTaskPopup";
 import TaskButton from "../common/TaskButton";
 
-import { createTask } from "../../actions/task";
+import { createTask } from "../../actions/tasks";
 
 function Front(props) {
   const { isAuthenticated } = props.auth;
   const [popup, setPopup] = useState(false);
+  const isFirstTask = props.tasks.length === 0;
 
   function closePopup() {
     setPopup(false);
@@ -50,7 +51,10 @@ function Front(props) {
         </div>
       </div>
       {isAuthenticated ? (
-        <TaskButton openPopup={openPopup} isFirstTask={true}></TaskButton>
+        <TaskButton
+          openPopup={openPopup}
+          isFirstTask={isFirstTask}
+        ></TaskButton>
       ) : (
         ""
       )}
@@ -69,10 +73,12 @@ function Front(props) {
 
 Front.propTypes = {
   auth: PropTypes.object.isRequired,
+  tasks: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  tasks: state.tasks.tasks,
 });
 
 export default connect(mapStateToProps, { createTask })(Front);

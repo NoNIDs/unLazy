@@ -7,7 +7,12 @@ from django.contrib.auth import authenticate
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'notify')
+        fields = (
+            'id',
+            'username',
+            'email',
+            'notify',
+        )
 
     def update(self, instance, validated_data):
         instance.id = validated_data.get('id', instance.id)

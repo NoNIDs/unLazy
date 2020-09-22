@@ -16,3 +16,16 @@ class Task(models.Model):
 
     def __str__(self):
         return self.task_id
+
+
+class TaskStatistic(models.Model):
+    statistic_user = models.ForeignKey(User,
+                                       on_delete=models.CASCADE,
+                                       related_name="statistic",
+                                       null=True)
+    pointsLevel = models.PositiveIntegerField(default=0)
+    countCompletedTasks = models.PositiveIntegerField(default=0)
+    countFailedTasks = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.statistic_user

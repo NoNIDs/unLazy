@@ -8,10 +8,12 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case ENABLE_NOTIFY:
       return {
+        ...state,
         notify: action.payload.notify,
       };
     case DISABLE_NOTIFY:
       return {
+        ...state,
         notify: action.payload.notify,
       };
     default:

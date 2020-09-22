@@ -16,6 +16,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import { makeStyles } from "@material-ui/core/styles";
+import { set } from "date-fns/esm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,14 @@ function AddTaskPopup({ addTask, changeTaskCheck, closePopup }) {
     setDeadlineDate(date);
   }
 
+  function setDefaultState() {
+    setTaskName("");
+    setTaskDesc("");
+    setDeadlineDate(new Date());
+    setPriority(1);
+    setComplexity(1);
+  }
+
   function submitHandler(e) {
     e.preventDefault();
 
@@ -49,6 +58,8 @@ function AddTaskPopup({ addTask, changeTaskCheck, closePopup }) {
       priority,
       complexity,
     });
+
+    setDefaultState();
   }
 
   return (
