@@ -4134,6 +4134,24 @@ body {
   }
 }
 
+@-webkit-keyframes task-hide-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes task-hide-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .reg_form_err {
   color: #ff4655;
 }
@@ -4147,6 +4165,7 @@ body {
   background-color: #0f1923;
   padding: 0 10rem;
   border-bottom: 1px solid #353e4a;
+  z-index: 80;
 }
 
 .auth-menu-container {
@@ -4194,7 +4213,6 @@ body {
 
 /* Dropdown Menu */
 .dropdown {
-  z-index: 100;
   position: absolute;
   top: 70px;
   width: 300px;
@@ -4205,6 +4223,7 @@ body {
   padding: 1rem;
   overflow: hidden;
   transition: all ease-in-out 0.3s;
+  z-index: 100;
   /* CSSTransition classes  */
 }
 
@@ -4304,7 +4323,7 @@ body {
 
 .nav-menu {
   z-index: 100;
-  position: fixed;
+  position: absolute;
   transition: width 600ms ease;
   width: 5rem;
   overflow-x: hidden;
@@ -4551,6 +4570,15 @@ body {
   display: flex;
 }
 
+.task-list tr.task-item {
+  transition: all ease-in-out 0.3s;
+}
+
+.task-list tr.task-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 176, 166, 0.2);
+}
+
 .task-list td,
 .task-list th {
   flex-basis: 100%;
@@ -4579,9 +4607,22 @@ body {
 }
 
 .task-list-header th {
+  display: flex;
+  align-items: center;
   padding: 1rem;
   text-transform: uppercase;
   color: #fbf8ef;
+  transition: all ease-in-out 0.3s;
+}
+
+.task-list-header th i {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+}
+
+.task-list-header th:hover {
+  cursor: pointer;
+  color: #00b0a6;
 }
 
 .task-list-items {
@@ -4608,4 +4649,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.task-hide-anim {
+  -webkit-animation: task-hide-anim ease-in 7s;
+          animation: task-hide-anim ease-in 7s;
 }

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { returnErrors } from "./messages";
+import { createStatistic } from "./statistic";
+import { getTasks } from "./tasks";
 
 import {
   USER_LOADED,
@@ -24,6 +26,7 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data,
       });
+      dispatch(getTasks());
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -52,6 +55,7 @@ export const login = (username, password) => (dispatch) => {
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
+      dispatch(getTasks());
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -62,7 +66,10 @@ export const login = (username, password) => (dispatch) => {
 };
 
 // REGISTER USER
-export const register = ({ username, password, email }) => (dispatch) => {
+export const register = ({ username, password, email }) => (
+  dispatch,
+  getState
+) => {
   // Headers
   const config = {
     headers: {
@@ -80,7 +87,7 @@ export const register = ({ username, password, email }) => (dispatch) => {
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
-      console.log(res);
+      dispatch(createStatistic());
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));

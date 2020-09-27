@@ -1,20 +1,24 @@
 import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
-import { deleteTask } from "./tasks";
 
-import { COMPLETE_TASK, GET_STATISTIC } from "./types";
+import {
+  COMPLETE_TASK,
+  GET_STATISTIC,
+  CREATE_STATISTIC,
+  CREATE_STATISTIC_FAIL,
+} from "./types";
 
 // COMPLETE COUNT TASKS
-export const setCompleteTask = (id, completeTasks) => (dispatch, getState) => {
+export const setCompleteTask = (completeTasks) => (dispatch, getState) => {
   // Request Body
   const body = JSON.stringify({ countCompletedTasks: completeTasks + 1 });
 
   //setComplete count for user
   axios
-    .put("/api/statistic/", body, tokenConfig(getState))
+    .put("/api/statistic", body, tokenConfig(getState))
     .then((res) => {
-      dispatch(createMessage({ completeTasks: "Task complete!" }));
+      dispatch(createMessage({ completeTask: "Task complete!" }));
       dispatch({
         type: COMPLETE_TASK,
         payload: res.data,
@@ -23,9 +27,31 @@ export const setCompleteTask = (id, completeTasks) => (dispatch, getState) => {
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
     });
+};
 
-  // delete task(id)
-  deleteTask(id);
+// CREATE STATISTIC FOR NEW USER
+export const createStatistic = () => (dispatch, getState) => {
+  //initial values for new user
+  const body = JSON.stringify({
+    pointsLevel: 0,
+    countCompletedTasks: 0,
+    countFailedTasks: 0,
+  });
+
+  axios
+    .post("/api/statistic/create", body, tokenConfig(getState))
+    .then((response) => {
+      dispatch({
+        type: CREATE_STATISTIC,
+        payload: response.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: CREATE_STATISTIC_FAIL,
+      });
+    });
 };
 
 // GET STATISTIC USER

@@ -18,7 +18,11 @@ export const DISABLE_NOTIFY = "DISABLE_NOTIFY";
 export const ADD_TASK = "ADD_TASK";
 export const GET_TASKS = "GET_TASKS";
 export const DELETE_TASK = "DELETE_TASK";
+export const CHANGE_TASK = "CHANGE_TASK";
 
 export const COMPLETE_TASK = "COMPLETE_TASK";
-export const GET_STATISTIC = "GET_STATISTIC";
 export const FAIL_TASK = "FAIL_TASK";
+
+export const GET_STATISTIC = "GET_STATISTIC";
+export const CREATE_STATISTIC = "CREATE_STATISTIC";
+export const CREATE_STATISTIC_FAIL = "CREATE_STATISTIC_FAIL";

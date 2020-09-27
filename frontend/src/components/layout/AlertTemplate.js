@@ -40,7 +40,7 @@ export default function AlertTemplate({ options, message, close }) {
           horizontal: "right",
         }}
       >
-        <Alert onClose={close} severity={options.type}>
+        <Alert onClose={() => close()} severity={options.type}>
           {message}
         </Alert>
       </Snackbar>

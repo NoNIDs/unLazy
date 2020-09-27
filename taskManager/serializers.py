@@ -8,6 +8,20 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = '__all__'
 
+    def update(self, instance, validated_data):
+        instance.task_user = validated_data.get('task_user',
+                                                instance.task_user)
+        instance.task_id = validated_data.get('task_id', instance.task_id)
+        instance.taskName = validated_data.get('taskName', instance.taskName)
+        instance.taskDesc = validated_data.get('taskDesc', instance.taskDesc)
+        instance.deadlineDate = validated_data.get('deadlineDate',
+                                                   instance.deadlineDate)
+        instance.priority = validated_data.get('priority', instance.priority)
+        instance.complexity = validated_data.get('complexity',
+                                                 instance.complexity)
+        instance.save()
+        return instance
+
 
 # Task Statistic Serializer
 class TaskStatisticSerializer(serializers.ModelSerializer):

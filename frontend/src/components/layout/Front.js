@@ -16,7 +16,6 @@ function Front(props) {
   function closePopup() {
     setPopup(false);
   }
-
   function openPopup() {
     setPopup(true);
   }

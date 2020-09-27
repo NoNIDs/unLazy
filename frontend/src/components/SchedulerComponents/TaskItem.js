@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Context from "../../context";
 
 import Checkbox from "@material-ui/core/Checkbox";
@@ -18,15 +18,36 @@ const useStyles = makeStyles((theme) => ({
 
 function TaskItem(props) {
   const classes = useStyles();
+
+  let checkedTimeout;
+  const [checked, setChecked] = useState(false);
+  useEffect(() => {
+    if (checked)
+      checkedTimeout = setTimeout(
+        () => checkedTask(task.task_id, checked),
+        6000
+      );
+  }, [checked]);
+
   const task = props.task;
-  const { removeTask } = useContext(Context);
+  const { removeTask, checkedTask, openChangePopup } = useContext(Context);
+
   return (
-    <tr className="task-item">
+    <tr
+      className={`task-item ${checked ? "task-hide-anim" : ""}`}
+      onClick={() => openChangePopup(task)}
+    >
       <td className="completed-btn">
         <Checkbox
+          checked={checked}
           className="completed-checkbox"
           color="primary"
           inputProps={{ "aria-label": "secondary checkbox" }}
+          onClick={(e) => {
+            e.stopPropagation();
+            clearTimeout(checkedTimeout);
+            setChecked(!checked);
+          }}
         />
       </td>
       <td className="task-name">
@@ -46,7 +67,10 @@ function TaskItem(props) {
           className={classes.button}
           variant="contained"
           color="secondary"
-          onClick={removeTask.bind(null, task.task_id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            removeTask(task.task_id);
+          }}
           startIcon={<DeleteIcon />}
         >
           Delete

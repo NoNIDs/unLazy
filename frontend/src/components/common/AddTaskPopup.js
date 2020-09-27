@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   MuiPickersUtilsProvider,
@@ -8,15 +8,11 @@ import DateFnsUtils from "@date-io/date-fns";
 
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 
-import Button from "@material-ui/core/Button";
-
 import { makeStyles } from "@material-ui/core/styles";
-import { set } from "date-fns/esm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,14 +20,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddTaskPopup({ addTask, changeTaskCheck, closePopup }) {
+function AddTaskPopup({
+  addTask,
+  closePopup,
+  changeTaskCheck,
+  task,
+  changeTaskValues,
+}) {
   const classes = useStyles();
 
+  //initial state for add task popup
   const [taskName, setTaskName] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
   const [deadlineDate, setDeadlineDate] = useState(new Date());
   const [priority, setPriority] = useState(1);
   const [complexity, setComplexity] = useState(1);
+
+  //initial state for change task popup
+  useEffect(() => {
+    if (task) {
+      setTaskName(task.taskName);
+      setTaskDesc(task.taskDesc);
+      setDeadlineDate(task.deadlineDate);
+      setPriority(task.priority);
+      setComplexity(task.complexity);
+    }
+  }, [task]);
 
   function handleDateChange(date) {
     setDeadlineDate(date);
@@ -48,18 +62,39 @@ function AddTaskPopup({ addTask, changeTaskCheck, closePopup }) {
   function submitHandler(e) {
     e.preventDefault();
 
-    let deadline = deadlineDate.toLocaleDateString("en-us");
-    if (deadline.charAt(0) !== "0") deadline = "0" + deadline; // correct date format for server (mm/dd/YYYY)
+    let deadline; // date variable
 
-    addTask({
-      taskName,
-      taskDesc,
-      deadlineDate: deadline,
-      priority,
-      complexity,
-    });
+    // two logics change/add for this popup submit handler
+    if (changeTaskCheck) {
+      //wrong with date format (copy-paste shit)
+      if (task.deadlineDate !== deadlineDate) {
+        deadline = deadlineDate.toLocaleDateString("en-us");
+        if (deadline.charAt(0) !== "0") deadline = "0" + deadline; // correct date format for server (mm/dd/YYYY)
+      } else {
+        deadline = deadlineDate;
+      }
 
-    setDefaultState();
+      changeTaskValues(task.task_id, {
+        taskName,
+        taskDesc,
+        deadlineDate: deadline,
+        priority,
+        complexity,
+      });
+      // closePopup();
+    } else {
+      deadline = deadlineDate.toLocaleDateString("en-us");
+      if (deadline.charAt(0) !== "0") deadline = "0" + deadline; // correct date format for server (mm/dd/YYYY)
+      addTask({
+        taskName,
+        taskDesc,
+        deadlineDate: deadline,
+        priority,
+        complexity,
+      });
+
+      setDefaultState();
+    }
   }
 
   return (
@@ -165,11 +200,10 @@ function AddTaskPopup({ addTask, changeTaskCheck, closePopup }) {
                   Change task
                 </button>
               ) : (
-                ""
+                <button type="submit" className="btn">
+                  Add task
+                </button>
               )}
-              <button type="submit" className="btn">
-                Add task
-              </button>
             </div>
           </form>
         </div>

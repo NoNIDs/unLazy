@@ -20,9 +20,10 @@ export class Alerts extends Component {
       if (message.passwordNotMatch) alert.error(message.passwordNotMatch);
       if (message.addTask) alert.success(message.addTask);
       if (message.deleteTask) alert.success(message.deleteTask);
+      if (message.changeTask) alert.success(message.changeTask);
       if (message.notifyEnable) alert.info(message.notifyEnable);
       if (message.notifyDisable) alert.info(message.notifyDisable);
-      if (message.completeTasks) alert.success(message.completeTasks);
+      if (message.completeTask) alert.success(message.completeTask);
     }
   }
 

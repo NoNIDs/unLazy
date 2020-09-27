@@ -4,7 +4,12 @@ import Context from "../../context";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { getTasks, deleteTask, createTask } from "../../actions/tasks";
+import {
+  getTasks,
+  deleteTask,
+  createTask,
+  changeTask,
+} from "../../actions/tasks";
 import { setCompleteTask } from "../../actions/statistic";
 
 import TaskList from "../SchedulerComponents/TaskList";
@@ -15,18 +20,40 @@ function Scheduler(props) {
   const [popup, setPopup] = useState(false);
   const isFirstTask = props.tasks.length === 0;
 
+  const [currentTask, setCurrentTask] = useState(null);
+  const [changeTaskTrigger, setChangeTaskTrigger] = useState(false);
+
+  const [sortParams, setSortParams] = useState("");
+
   // initialize data
   useEffect(() => {
-    props.getTasks();
-  }, []);
+    props.getTasks(sortParams);
+  }, [sortParams]);
 
+  //sort by ... values
+  function setSorted(sortValue) {
+    setSortParams(sortValue);
+  }
   // popup methods
   function closePopup() {
     setPopup(false);
+    setChangeTaskTrigger(false);
+    setCurrentTask(null);
   }
 
   function openPopup() {
     setPopup(true);
+  }
+
+  function openChangePopup(task) {
+    setCurrentTask(task);
+    setChangeTaskTrigger(true);
+    setPopup(true);
+  }
+
+  // change value of task
+  function changeTaskValues(id, task) {
+    props.changeTask(id, task);
   }
 
   // task methods
@@ -38,22 +65,32 @@ function Scheduler(props) {
     props.deleteTask(id);
   }
 
-  // function checkedTask(id) {
-  //   props;
-  // }
+  function checkedTask(id) {
+    props.setCompleteTask(props.completeTasks);
+    props.deleteTask(id);
+  }
 
   return (
-    <Context.Provider value={{ removeTask }}>
+    <Context.Provider
+      value={{
+        removeTask,
+        checkedTask,
+        openPopup,
+        openChangePopup,
+      }}
+    >
       <div className="container">
         <h1 className="page-title">Scheduler</h1>
-        <TaskList tasks={props.tasks}></TaskList>
+        <TaskList tasks={props.tasks} setSorted={setSorted}></TaskList>
       </div>
       <TaskButton openPopup={openPopup} isFirstTask={isFirstTask}></TaskButton>
       {popup ? (
         <AddTaskPopup
-          changeTaskCheck={false}
+          task={currentTask}
+          changeTaskCheck={changeTaskTrigger}
           closePopup={closePopup}
           addTask={addTask}
+          changeTaskValues={changeTaskValues}
         ></AddTaskPopup>
       ) : (
         ""
@@ -66,6 +103,7 @@ Scheduler.propTypes = {
   getTasks: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   createTask: PropTypes.func.isRequired,
+  changeTask: PropTypes.func.isRequired,
   setCompleteTask: PropTypes.func.isRequired,
   tasks: PropTypes.array.isRequired,
   completeTasks: PropTypes.number.isRequired,
@@ -80,5 +118,6 @@ export default connect(mapStateToProps, {
   getTasks,
   deleteTask,
   createTask,
+  changeTask,
   setCompleteTask,
 })(Scheduler);
