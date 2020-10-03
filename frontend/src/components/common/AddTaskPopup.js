@@ -69,7 +69,8 @@ function AddTaskPopup({
       //wrong with date format (copy-paste shit)
       if (task.deadlineDate !== deadlineDate) {
         deadline = deadlineDate.toLocaleDateString("en-us");
-        if (deadline.charAt(0) !== "0") deadline = "0" + deadline; // correct date format for server (mm/dd/YYYY)
+        if (deadline.charAt(0) !== "0" && deadline.charAt(1) === "/")
+          deadline = "0" + deadline; // correct date format for server (mm/dd/YYYY)
       } else {
         deadline = deadlineDate;
       }
@@ -84,7 +85,8 @@ function AddTaskPopup({
       // closePopup();
     } else {
       deadline = deadlineDate.toLocaleDateString("en-us");
-      if (deadline.charAt(0) !== "0") deadline = "0" + deadline; // correct date format for server (mm/dd/YYYY)
+      if (deadline.charAt(0) !== "0" && deadline.charAt(1) === "/")
+        deadline = "0" + deadline; // correct date format for server (mm/dd/YYYY)
       addTask({
         taskName,
         taskDesc,
@@ -125,7 +127,6 @@ function AddTaskPopup({
               label="Description of task"
               name="taskDesc"
               autoComplete="taskDesc"
-              autoFocus
               value={taskDesc}
               onChange={(e) => {
                 setTaskDesc(e.target.value);

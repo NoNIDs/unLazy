@@ -1,4 +1,5 @@
 @import "config";
+@import "spinner";
 
 .btn {
   margin: 3px;
@@ -35,6 +36,31 @@
   flex-direction: column;
   align-items: center;
   height: 80vh;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex;
+  // align-items: center;
+  flex-direction: column;
+}
+
+.block-title {
+  text-align: center;
+  margin-top: 1rem;
 }
 
 // AddTask Button
@@ -605,5 +631,59 @@
 }
 
 .task-hide-anim {
-  animation: task-hide-anim ease-in 7s;
+  animation: task-hide-anim ease-in 4s;
+}
+
+// PROFILE PAGE
+.level-block {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  & span {
+    color: $ocean-light;
+    margin-right: 1rem;
+  }
+}
+
+.value-enter,
+.value-done {
+  margin-bottom: 1rem;
+  & span {
+    font-size: 1.3rem;
+    color: $orange;
+    margin-right: 1rem;
+  }
+  & input {
+    padding: 0.7rem;
+    width: 13rem;
+    margin-right: 1rem;
+  }
+  & i,
+  a {
+    font-size: 1rem;
+    transition: $anim;
+    &:hover {
+      cursor: pointer;
+      color: $ocean-light;
+    }
+  }
+}
+
+.short-desc-statistic {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 60%;
+  & p {
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    & span {
+      color: $ocean-light;
+    }
+  }
+}
+
+.change-password-form-input-block {
+  margin: 1rem 0;
+  width: 100%;
 }

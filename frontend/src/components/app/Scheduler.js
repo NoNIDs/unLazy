@@ -66,7 +66,7 @@ function Scheduler(props) {
   }
 
   function checkedTask(id) {
-    props.setCompleteTask(props.completeTasks);
+    props.setCompleteTask(props.completeTasks, props.pointsLevel);
     props.deleteTask(id);
   }
 
@@ -107,11 +107,13 @@ Scheduler.propTypes = {
   setCompleteTask: PropTypes.func.isRequired,
   tasks: PropTypes.array.isRequired,
   completeTasks: PropTypes.number.isRequired,
+  pointsLevel: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks.tasks,
   completeTasks: state.statistic.completeTasks,
+  pointsLevel: state.statistic.pointsLevel,
 });
 
 export default connect(mapStateToProps, {

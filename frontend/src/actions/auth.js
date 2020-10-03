@@ -1,6 +1,6 @@
 import axios from "axios";
-import { returnErrors } from "./messages";
-import { createStatistic } from "./statistic";
+import { returnErrors, createMessage, clearError } from "./messages";
+import { createStatistic, getStatistic } from "./statistic";
 import { getTasks } from "./tasks";
 
 import {
@@ -12,6 +12,10 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CHANGE_USERNAME,
+  CHANGE_USERNAME_FAIL,
+  CHANGE_PASSWORD,
+  CHANGE_PASSWORD_FAIL,
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
@@ -27,11 +31,65 @@ export const loadUser = () => (dispatch, getState) => {
         payload: res.data,
       });
       dispatch(getTasks());
+      dispatch(getStatistic());
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,
+      });
+    });
+};
+
+// CHANGE USER NAME
+export const changeUsername = (username) => (dispatch, getState) => {
+  // Request Body
+  const body = JSON.stringify({ username });
+
+  axios
+    .put("/api/auth/user", body, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: CHANGE_USERNAME,
+        payload: res.data,
+      });
+      dispatch(
+        createMessage({ changeUsername: "Username was changed successfully" })
+      );
+      dispatch(clearError());
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: CHANGE_USERNAME_FAIL,
+      });
+    });
+};
+
+// CHANGE USER PASSWORD
+export const changePassword = (old_password, new_password) => (
+  dispatch,
+  getState
+) => {
+  // Request Body
+  const body = JSON.stringify({ old_password, new_password });
+
+  axios
+    .put("/api/auth/user/change_password", body, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: CHANGE_PASSWORD,
+        payload: res.data,
+      });
+      dispatch(
+        createMessage({ changePassword: "Password was changed successfully" })
+      );
+      dispatch(clearError());
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: CHANGE_PASSWORD_FAIL,
       });
     });
 };

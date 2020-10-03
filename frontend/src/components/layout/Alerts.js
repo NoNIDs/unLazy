@@ -14,6 +14,7 @@ export class Alerts extends Component {
       if (error.msg.non_field_errors)
         alert.error(error.msg.non_field_errors.join());
       if (error.msg.username) alert.error(error.msg.username.join());
+      if (error.msg.passwordError) alert.error(error.msg.passwordError.join());
     }
 
     if (message !== prevProps.message) {
@@ -24,6 +25,8 @@ export class Alerts extends Component {
       if (message.notifyEnable) alert.info(message.notifyEnable);
       if (message.notifyDisable) alert.info(message.notifyDisable);
       if (message.completeTask) alert.success(message.completeTask);
+      if (message.changeUsername) alert.success(message.changeUsername);
+      if (message.changePassword) alert.success(message.changePassword);
     }
   }
 

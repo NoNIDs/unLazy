@@ -25,7 +25,7 @@ function TaskItem(props) {
     if (checked)
       checkedTimeout = setTimeout(
         () => checkedTask(task.task_id, checked),
-        6000
+        3000
       );
   }, [checked]);
 

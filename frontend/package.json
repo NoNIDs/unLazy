@@ -21,6 +21,7 @@
     "bootstrap": "^4.5.0",
     "cross-env": "^7.0.2",
     "laravel-mix": "^5.0.5",
+    "lodash.debounce": "^4.0.8",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-alert": "^7.0.2",
@@ -31,6 +32,7 @@
     "sass": "^1.26.10",
     "sass-formatter": "^0.4.12",
     "sass-loader": "^8.0.2",
+    "use-hotkeys": "^1.1.0",
     "yup": "^0.29.3"
   },
   "dependencies": {
@@ -39,6 +41,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
+    "@toast-ui/react-chart": "^1.0.2",
     "date-fns": "^2.16.1",
     "materialize-css": "^1.0.0",
     "node-sass": "^4.14.1",

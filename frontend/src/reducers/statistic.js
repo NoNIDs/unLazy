@@ -17,9 +17,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         completeTasks: action.payload.countCompletedTasks,
+        pointsLevel: action.payload.pointsLevel,
       };
     case GET_STATISTIC:
-      return action.payload;
+      return {
+        ...state,
+        completeTasks: action.payload.countCompletedTasks,
+        failedTasks: action.payload.countFailedTasks,
+        pointsLevel: action.payload.pointsLevel,
+      };
     case CREATE_STATISTIC:
       return {
         ...state,

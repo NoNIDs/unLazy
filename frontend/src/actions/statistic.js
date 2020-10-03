@@ -10,9 +10,15 @@ import {
 } from "./types";
 
 // COMPLETE COUNT TASKS
-export const setCompleteTask = (completeTasks) => (dispatch, getState) => {
+export const setCompleteTask = (completeTasks, pointsLevel) => (
+  dispatch,
+  getState
+) => {
   // Request Body
-  const body = JSON.stringify({ countCompletedTasks: completeTasks + 1 });
+  const body = JSON.stringify({
+    countCompletedTasks: completeTasks + 1,
+    pointsLevel: pointsLevel + 100,
+  });
 
   //setComplete count for user
   axios
@@ -57,7 +63,7 @@ export const createStatistic = () => (dispatch, getState) => {
 // GET STATISTIC USER
 export const getStatistic = () => (dispatch, getState) => {
   axios
-    .get("/api/statistic/", tokenConfig(getState))
+    .get("/api/statistic", tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_STATISTIC,

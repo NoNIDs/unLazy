@@ -53,6 +53,7 @@ class TaskStatisticAPI(generics.RetrieveUpdateAPIView):
     serializer_class = TaskStatisticSerializer
 
     def put(self, request):
+        print("put")
         data = request.data
         statistic = TaskStatistic.objects.get(statistic_user=request.user)
         # print(statistic)
@@ -65,7 +66,9 @@ class TaskStatisticAPI(generics.RetrieveUpdateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
+        print("get")
         return self.request.user.statistic.all()
 
     def get_object(self):
-        return self.request.user.statistic
+        return self.request.user.statistic.get(
+            statistic_user=self.request.user)

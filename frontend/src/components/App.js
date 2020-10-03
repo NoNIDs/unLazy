@@ -31,8 +31,18 @@ import { loadUser } from "../actions/auth";
 function App() {
   const [loading, setLoading] = useState(true);
 
+  async function loadingUser(func) {
+    let promise = new Promise((res, rej) => {
+      setTimeout(() => res(func), 500);
+    });
+
+    let result = await promise;
+
+    setLoading(false);
+  }
+
   useEffect(() => {
-    fetch(store.dispatch(loadUser())).then((res, rej) => setLoading(false));
+    loadingUser(store.dispatch(loadUser()));
   }, []); // passing an empty array as second argument triggers the callback in useEffect only after the initial render thus replicating `componentDidMount` lifecycle behaviour
 
   return (

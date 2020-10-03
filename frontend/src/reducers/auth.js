@@ -7,6 +7,10 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CHANGE_USERNAME,
+  CHANGE_PASSWORD,
+  CHANGE_USERNAME_FAIL,
+  CHANGE_PASSWORD_FAIL,
 } from "../actions/types";
 
 export const initialState = {
@@ -51,6 +55,10 @@ export default function(state = initialState, action) {
         isAuthenticated: false,
         isLoading: false,
       };
+    case CHANGE_USERNAME:
+    case CHANGE_USERNAME_FAIL:
+    case CHANGE_PASSWORD:
+    case CHANGE_PASSWORD_FAIL:
     default:
       return state;
   }

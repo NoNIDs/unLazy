@@ -1,11 +1,19 @@
 import React from "react";
 
-function Statistic() {
+import { connect } from "react-redux";
+
+import ChartShortStatistic from "../StatisticComponents/ChartShortStatistic";
+
+function Statistic(props) {
   return (
     <div className="container">
-      <h1 className="header">Statistic Page</h1>
+      <h1 className="header">Statistic your profile</h1>
+      <ChartShortStatistic data={props.statistic} />
     </div>
   );
 }
 
-export default Statistic;
+const mapStateToProps = (state) => ({
+  statistic: state.statistic,
+});
+export default connect(mapStateToProps)(Statistic);
