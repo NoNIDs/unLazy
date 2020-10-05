@@ -23,6 +23,7 @@ class TaskStatistic(models.Model):
                                        on_delete=models.CASCADE,
                                        related_name="statistic",
                                        null=True)
+    username = models.CharField(max_length=20, default="None")
     pointsLevel = models.PositiveIntegerField(default=0)
     countCompletedTasks = models.PositiveIntegerField(default=0)
     countFailedTasks = models.PositiveIntegerField(default=0)

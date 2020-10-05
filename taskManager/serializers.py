@@ -32,6 +32,7 @@ class TaskStatisticSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.statistic_user = validated_data.get('statistic_user',
                                                      instance.statistic_user)
+        instance.username = validated_data.get('username', instance.username)
         instance.pointsLevel = validated_data.get('pointsLevel',
                                                   instance.pointsLevel)
         instance.countCompletedTasks = validated_data.get(
@@ -40,3 +41,10 @@ class TaskStatisticSerializer(serializers.ModelSerializer):
             'countFailedTasks', instance.countFailedTasks)
         instance.save()
         return instance
+
+
+# Task Statistic Serializer
+# class RatingSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = TaskStatistic
+#         fields = ("id", "pointsLevel", "username")

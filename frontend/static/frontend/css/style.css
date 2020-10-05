@@ -8791,3 +8791,100 @@ body {
   margin: 1rem 0;
   width: 100%;
 }
+
+.rating-header {
+  margin: 3rem 0;
+}
+
+.rating-header-icon {
+  font-size: 3rem;
+  color: #e1aa12;
+}
+
+.rating-header-icon-container {
+  margin-bottom: 1rem;
+}
+
+.rating-header-icon-container::before {
+  display: inline-block;
+  content: "";
+  border-top: 2px solid #e1aa12;
+  width: 3.5rem;
+  margin: -0.5rem 2rem;
+  transform: translateY(-1rem);
+}
+
+.rating-header-icon-container::after {
+  display: inline-block;
+  content: "";
+  border-top: 2px solid #e1aa12;
+  width: 4rem;
+  margin: -0.5rem 2rem;
+  transform: translateY(-1rem);
+}
+
+.rating-header-title {
+  color: #e1aa12;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.rating-list-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.rating-list-container .rating-item {
+  position: relative;
+  height: 4rem;
+  background-color: #fbf8ef;
+  box-shadow: 0px 0px 16px #0f1923;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.rating-list-container .rating-item-top {
+  position: absolute;
+  top: -2rem;
+  left: 1rem;
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.rating-list-container .rating-item-username {
+  display: inline-block;
+  width: 5rem;
+  font-size: 1.5rem;
+  color: #0f1923;
+  margin-left: 3rem;
+}
+
+.rating-list-container .rating-item-username.active-user {
+  color: #008089;
+}
+
+.rating-list-container .rating-item-level {
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.rating-list-container .rating-item.gold {
+  background-color: #e1aa12;
+}
+
+.rating-list-container .rating-item.silver {
+  background-color: #c0c0c0;
+}
+
+.rating-list-container .rating-item.bronze {
+  background-color: #cd7f32;
+}

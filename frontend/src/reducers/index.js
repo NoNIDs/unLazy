@@ -6,6 +6,7 @@ import auth from "./auth";
 import notify from "./notify";
 import tasks from "./tasks";
 import statistic from "./statistic";
+import rating from "./rating";
 
 export default combineReducers({
   errors,
@@ -14,4 +15,5 @@ export default combineReducers({
   notify,
   tasks,
   statistic,
+  rating,
 });

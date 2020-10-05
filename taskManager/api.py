@@ -5,6 +5,9 @@ from rest_framework import status
 from .serializers import TaskSerializer, TaskStatisticSerializer
 from .models import Task, TaskStatistic
 
+from accounts.serializers import UserSerializer
+from accounts.models import User
+
 
 # Get Task API
 class TaskViewSet(viewsets.ModelViewSet):
@@ -34,6 +37,24 @@ class TaskViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Get Users for Rating
+class RatingAPI(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    serializer_class = TaskStatisticSerializer
+
+    def get_queryset(self):
+        if self.request.method == "GET":
+            limit = self.request.GET.get("limit", None)
+            if limit is not None:
+                stat_arr = TaskStatistic.objects.all().order_by(
+                    "-pointsLevel")[:int(limit)].values(
+                        "id", "pointsLevel", "username")
+        return stat_arr
+
+
 # Create Task Statistic for User from Registration
 class CreateTaskStatisticAPI(generics.CreateAPIView):
     permission_classes = [
@@ -42,7 +63,8 @@ class CreateTaskStatisticAPI(generics.CreateAPIView):
     serializer_class = TaskStatisticSerializer
 
     def perform_create(self, serializer):
-        serializer.save(statistic_user=self.request.user)
+        serializer.save(statistic_user=self.request.user,
+                        username=self.request.user.username)
 
 
 # Get Task Statistic API
