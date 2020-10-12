@@ -18,6 +18,7 @@ import Rating from "./app/Rating";
 import Scheduler from "./app/Scheduler";
 import Statistic from "./app/Statistic";
 import Articles from "./app/Articles";
+import ArticlePage from "./ArticlesComponents/ArticlePage";
 
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -63,7 +64,8 @@ function App() {
                 <PrivateRoute exact path="/scheduler" component={Scheduler} />
                 <PrivateRoute exact path="/rating" component={Rating} />
                 <PrivateRoute exact path="/statistic" component={Statistic} />
-                <PrivateRoute exact path="/articles" component={Articles} />
+                <Route exact path="/articles" component={Articles} />
+                <Route exact path="/articles/:id" component={ArticlePage} />
               </Switch>
             </div>
           </Router>

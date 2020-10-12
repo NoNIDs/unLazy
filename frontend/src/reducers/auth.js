@@ -13,7 +13,7 @@ import {
   CHANGE_PASSWORD_FAIL,
 } from "../actions/types";
 
-export const initialState = {
+const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: false,
   isLoading: false,

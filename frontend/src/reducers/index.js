@@ -7,6 +7,7 @@ import notify from "./notify";
 import tasks from "./tasks";
 import statistic from "./statistic";
 import rating from "./rating";
+import articles from "./articles";
 
 export default combineReducers({
   errors,
@@ -16,4 +17,5 @@ export default combineReducers({
   tasks,
   statistic,
   rating,
+  articles,
 });

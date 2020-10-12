@@ -772,3 +772,45 @@
     }
   }
 }
+
+.articles-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 80%;
+  overflow-y: scroll;
+  max-height: 60vh;
+  & .article-item-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    transition: $anim;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($ocean-light, 0.2);
+    }
+    & .article-item-title {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      &-headline h3 {
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      &-desc p {
+        text-overflow: ellipsis; /* will make [...] at the end */
+        width: 1000px;
+        white-space: nowrap; /* paragraph to one line */
+        overflow: hidden; /* older browsers */
+      }
+    }
+    & .article-item-date {
+      height: 100%;
+      padding: 1rem;
+      font-size: 2rem;
+      font-weight: 300;
+      color: $ocean-light;
+    }
+  }
+}

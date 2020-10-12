@@ -8888,3 +8888,54 @@ body {
 .rating-list-container .rating-item.bronze {
   background-color: #cd7f32;
 }
+
+.articles-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 80%;
+  overflow-y: scroll;
+  max-height: 60vh;
+}
+
+.articles-container .article-item-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: all ease-in-out 0.3s;
+}
+
+.articles-container .article-item-container:hover {
+  cursor: pointer;
+  background-color: rgba(0, 176, 166, 0.2);
+}
+
+.articles-container .article-item-container .article-item-title {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.articles-container .article-item-container .article-item-title-headline h3 {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.articles-container .article-item-container .article-item-title-desc p {
+  text-overflow: ellipsis;
+  /* will make [...] at the end */
+  width: 1000px;
+  white-space: nowrap;
+  /* paragraph to one line */
+  overflow: hidden;
+  /* older browsers */
+}
+
+.articles-container .article-item-container .article-item-date {
+  height: 100%;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: 300;
+  color: #00b0a6;
+}
